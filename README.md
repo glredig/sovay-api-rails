@@ -1,1 +1,3 @@
-# sovay-api-rails
+# Sovay API
+
+Backend support for the Sovay app
