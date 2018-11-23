@@ -1,4 +1,4 @@
 class Weighin < ApplicationRecord
-	validates_presence_of :weight
+	validates :weight, presence: true, numericality: { greater_than: 0 }
 	validates_presence_of :date
 end

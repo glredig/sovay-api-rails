@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Weighin, type: :model do
-  let!(:weighin) { create(:weighin)}
+  let!(:weighin) { create(:weighin) }
 
   subject { weighin }
 
@@ -10,12 +10,17 @@ RSpec.describe Weighin, type: :model do
 
   it { should be_valid }
 
-  describe "when weight is not present" do
+  describe 'when weight is not present' do
     before { weighin.weight = nil}
     it { should_not be_valid }
   end
 
-  describe "when date is not present" do
+  describe 'when weight is not a number' do
+  	before { weighin.weight = 'a' }
+  	it { should_not be_valid }
+  end
+
+  describe 'when date is not present' do
     before { weighin.date = nil}
     it { should_not be_valid }
   end

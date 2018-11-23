@@ -25,6 +25,16 @@ class WeighinsController < ApplicationController
 		end
 	end
 
+	def update
+		@weighin = Weighin.find(params[:id])
+
+		if @weighin.update_attributes(weighin_params)
+			render json: @weighin, status: 201
+		else
+			render json: @weighin.errors.first.join(' ').capitalize, status: 422
+		end
+	end
+
 	protected
 
 	def weighin_params

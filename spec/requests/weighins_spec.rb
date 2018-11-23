@@ -60,7 +60,7 @@ RSpec.describe 'Weighins API', type: :request do
 		end
 
 		context 'when the request is invalid' do
-			before { post '/weighins', params: { weighin: { weight: 'a' } }}
+			before { post '/weighins', params: { weighin: { weight: 200 } }}
 
 			it 'returns status code 422' do
 				expect(response).to have_http_status(422)
@@ -68,6 +68,34 @@ RSpec.describe 'Weighins API', type: :request do
 
 			it 'returns a failure message' do
 				expect(response.body).to match(/Date can't be blank/)
+			end
+		end
+	end
+
+	describe 'PUT /weighins/:id' do
+		let(:valid_attrs) { { weighin: { weight: 200.0 }, id: weighin_id } }
+
+		context 'when the request is valid' do
+			before { put "/weighins/#{weighin_id}", params:  valid_attrs }
+
+			it 'updates the weighin' do
+				expect(json['weight']).to eq('200.0')
+			end
+
+			it 'returns status code 201' do
+				expect(response).to have_http_status(201)
+			end
+		end
+
+		context 'when the request is invalid' do
+			before { put "/weighins/#{weighin_id}", params:  { weighin: { weight: 'a' } }}
+
+			it 'returns status code 422' do
+				expect(response).to have_http_status(422)
+			end
+
+			it 'returns a failure message' do
+				expect(response.body).to match(/Weight is not a number/)
 			end
 		end
 	end
