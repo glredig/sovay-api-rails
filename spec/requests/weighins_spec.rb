@@ -99,4 +99,22 @@ RSpec.describe 'Weighins API', type: :request do
 			end
 		end
 	end
+
+	describe 'DELETE /weighins/:id' do
+		context 'when the request is valid' do
+			before { delete "/weighins/#{weighin_id}" }
+
+			it 'returns status code 204' do
+				expect(response).to have_http_status(204)
+			end
+		end
+
+		context 'when the requested record is invalid' do
+			before { delete "/weighins/300" }
+
+			it 'returns status code 404' do
+				expect(response).to have_http_status(404)
+			end
+		end
+	end
 end

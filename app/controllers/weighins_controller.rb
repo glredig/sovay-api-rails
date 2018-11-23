@@ -35,6 +35,16 @@ class WeighinsController < ApplicationController
 		end
 	end
 
+	def destroy
+		@weighin = Weighin.find(params[:id])
+
+		if @weighin.destroy
+			render status: 204
+		else
+			render json: @weighin.errors.first.join(' ').capitalize, status: 404
+		end
+	end
+	
 	protected
 
 	def weighin_params
